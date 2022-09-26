@@ -556,4 +556,5 @@ function handleError(err){
 function runSASCode(){
 
 	console.log(getSelectedTable());
+	$("#status_message").empty().append(getSelectedTable());
 }
