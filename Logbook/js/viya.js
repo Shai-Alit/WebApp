@@ -557,4 +557,21 @@ function runSASCode(){
 
 	console.log(getSelectedCaslib());
 	$("#status_message").empty().append(getSelectedCaslib());
+
+	var code = 'proc sql; create table active_small as ';
+	code += 'select Make, Model, MSRP, EngineSize';
+	code += 'from sashelp.cars';
+	code += 'where Make="Acura";';
+	code += 'quit;';
+
+	let payload = {
+		action: 'datastep.runCode',
+		data  : {'code': code, 'single': 'yes'}
+	}
+
+	store.runAction(currentSession, payload).then (r => {
+		console.log(r);
+	})
+
+	
 }
