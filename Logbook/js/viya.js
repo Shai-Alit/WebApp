@@ -562,7 +562,7 @@ function runSASCode(){
 		'Accept':'application/vnd.sas.job.execution.job+json'
 	  };
 	  
-	  fetch('https://eeclxvm067.exnet.sas.com/jobExecution/jobs/{17c1f834-d8eb-4263-906c-0ac5d4ce97d7}',
+	  fetch('https://eeclxvm067.exnet.sas.com/jobExecution/jobs/17c1f834-d8eb-4263-906c-0ac5d4ce97d7',
 	  {
 		method: 'GET',
 	  
