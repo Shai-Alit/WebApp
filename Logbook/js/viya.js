@@ -558,44 +558,19 @@ function runSASCode(){
 	console.log(getSelectedCaslib());
 	$("#status_message").empty().append(getSelectedCaslib());
 
-	const inputBody = {
-		"name": "proc sql example example",
-		"description": "sql test code",
-		"jobDefinitionUri": "/jobDefinitions/definitions/17c1f834-d8eb-4263-906c-0ac5d4ce97d",
-	  };
+	var code = 'data active (keep=Make Model MSRP EngineSize);';
+	code += 'set seford_s.cars;';
+	code += 'where Make="Acura";';
+	code += 'run;';
 
-	  const headers = {
-		'Content-Type':'application/vnd.sas.job.execution.job.request+json',
-		'Accept':'application/vnd.sas.job.execution.job+json'
-	  };
-	  
-	  fetch('https://eeclxvm067.exnet.sas.com/jobExecution/jobs',
-	  {
-		method: 'POST',
-		body: inputBody,
-		headers: headers
-	  })
-	  .then(function(res) {
-		  return res.json();
-	  }).then(function(body) {
-		  console.log(body);
-	  });
+	let payload = {
+		action: 'datastep.runCode',
+		data  : {'code': code, 'single': 'yes'}
+	}
 
-	const headers2 = {
-		'Accept':'application/vnd.sas.job.execution.job+json'
-	  };
-	  
-	  fetch('https://eeclxvm067.exnet.sas.com/jobExecution/jobs/17c1f834-d8eb-4263-906c-0ac5d4ce97d7',
-	  {
-		method: 'GET',
-	  
-		headers: headers2
-	  })
-	  .then(function(res) {
-		  return res.json();
-	  }).then(function(body) {
-		  console.log(body);
-	  });
+	store.runAction(currentSession, payload).then (r => {
+		console.log(r);
+	}).catch(err => handleError(err))
 
 	
 }
