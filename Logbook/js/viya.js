@@ -552,3 +552,8 @@ function handleError(err){
 	console.error(err);
 
 }
+
+function runSASCode(){
+
+	console.log(getSelectedTable());
+}
