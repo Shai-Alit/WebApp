@@ -571,7 +571,7 @@ function runSASCode(){
 
 	store.runAction(currentSession, payload).then (r => {
 		console.log(r);
-	})
+	}).catch(err => handleError(err))
 
 	
 }
