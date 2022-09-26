@@ -555,6 +555,6 @@ function handleError(err){
 
 function runSASCode(){
 
-	console.log(getSelectedTable());
-	$("#status_message").empty().append(getSelectedTable());
+	console.log(getSelectedCaslib());
+	$("#status_message").empty().append(getSelectedCaslib());
 }
