@@ -558,19 +558,21 @@ function runSASCode(){
 	console.log(getSelectedCaslib());
 	$("#status_message").empty().append(getSelectedCaslib());
 
-	var code = 'data active (keep=Make Model MSRP EngineSize);';
-	code += 'set sashelp.cars;';
-	code += 'where Make="Acura";';
-	code += 'run;';
-
-	let payload = {
-		action: 'datastep.runCode',
-		data  : {'code': code, 'single': 'yes'}
-	}
-
-	store.runAction(currentSession, payload).then (r => {
-		console.log(r);
-	}).catch(err => handleError(err))
+	const headers = {
+		'Accept':'application/vnd.sas.job.execution.job+json'
+	  };
+	  
+	  fetch('https://eeclxvm067.exnet.sas.com/jobExecution/jobs/{17c1f834-d8eb-4263-906c-0ac5d4ce97d7}',
+	  {
+		method: 'GET',
+	  
+		headers: headers
+	  })
+	  .then(function(res) {
+		  return res.json();
+	  }).then(function(body) {
+		  console.log(body);
+	  });
 
 	
 }
