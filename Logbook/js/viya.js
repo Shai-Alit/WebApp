@@ -1,8 +1,10 @@
 /**
- * Author: Sean Ford (sean.ford@sas.com)
- * borrowed from Matthew Perry (matthew.perry@sas.com)
- * SAS
- */
+*
+*	Author:   Matthew Perry (matthew.perry@sas.com)
+*	Company:  SAS Institute
+*	Dev Date: 3/17/2021
+*
+**/
 
 var currentSession;
 var viyahost = window.location.origin;
@@ -18,132 +20,145 @@ var table_rows = [];
 var table_filter = '';
 
 /**
- * Initialize the connection to the Viya backend. Leverages the authentication from the browser.
- */
-async function appInit() {
-    let p = {
-        authType: 'server',
-        host: viya_server
-    }
+*
+*	Initialize the connection to the Viya backend. Leverages the authentication from the browser.
+*
+**/
+async function appInit(){
+
+	let p = {
+	  authType: 'server',
+	  host: viyahost
+	}
     let msg = await store.logon(p);
     let {casManagement} = await store.addServices ('casManagement');
-    let servers = await store.apiCall(casManagement.links('servers'))
+    let servers = await store.apiCall(casManagement.links('servers'));
     let serverName = servers.itemsList(0);
-    let session = await store.apiCall(servers.itemsCmd(serverName,'createSession'));
-
-    let {identities} = await store.addServices('identities');
-    let c = await store.api_call(identities.links('currentUser'));
-    logged_user = c.items('id');
-    
+    let session = await store.apiCall(servers.itemsCmd(serverName, 'createSession'));
+	
+	let { identities } = await store.addServices('identities');
+    let c = await store.apiCall(identities.links('currentUser'));
+	logged_user = c.items('id');
+		
     return session;
 }
 
 /**
- * Loads the initial data
- */
-function initDataEditor() {
-    appInit().then(session=> {
-        currentSession = session;
-        getCaslibs();
-    }).catch(err=>handleError(err));
+*
+*	Loads the initial data
+*
+**/
+function initDataEditor(){
+
+	appInit().then ( session => {
+		currentSession = session;
+		getCaslibs();
+	}).catch( err => handleError(err));
+
 }
 
 function getCaslibs(){
-    caslib_details={'mdType':'CASLIBS'};
-    let caslibPayload = {
-        action : 'accessControl.listMetadata',
-        data : caslib_details
-    }
 
-    store.runAction(currentSession, caslibPayload).then (r=> {
-        caslibs = r.items("results","Metadata").toJS().rows;
-        for (var i=0; i < caslibs.length; i++) {
-            var caslib = caslibs[i][0];
-            if (caslib.indexOf('(') != -1)
-                caslib = caslib.substr(caslib,caslib.indexOf('('));
+	caslib_details={'mdType': 'CASLIBS'};
+	let caslibPayload = {
+		action: 'accessControl.listMetadata',
+		data  : caslib_details
+	}
 
-            $('#caslib_select').append('<option value="' + caslib + '">' + caslibs[i][0] + '</option>');
+	store.runAction(currentSession, caslibPayload).then ( r => {
+		caslibs = r.items("results", "Metadata").toJS().rows;
+		for(var i=0; i < caslibs.length; i++) {
+			var caslib = caslibs[i][0];
+			if(caslib.indexOf('(') != -1)
+				caslib = caslib.substr(caslib, caslib.indexOf('('));
 
-        }
-    }).catch(err => handleError(err))
+			$('#caslib_select').append('<option value="' + caslib + '">' + caslibs[i][0] + '</option>');
+		}
+
+	}).catch(err => handleError(err))
+	
 }
 
-function loadCaslibTables() {
-    caslib_tables={'caslib':getSelectedCaslib()};
-    let caslibPayload = {
-        action : 'table.tableInfo',
-        data : caslib_tables
-    }
+function loadCaslibTables(){
+	
+	caslib_tables={'caslib':getSelectedCaslib()};
+	let caslibPayload = {
+		action: 'table.tableInfo',
+		data  : caslib_tables
+	}
 
-    store.runAction(currentSession, caslibPayload).then (r => {
-        tableInfo = r.items("results","TableInfo");
-        cleanupSelector('table_select');
-        if(tableInfo){
-            costables = tableInfo.toJS().rows;
+	store.runAction(currentSession, caslibPayload).then ( r => {
+		tableInfo = r.items("results", "TableInfo");
+		cleanupSelector('table_select');
+		if(tableInfo){
+			castables = tableInfo.toJS().rows;
 
-            for(var i=0; i < castables.length; i++) {
-                $('#table_select').append('<option value="' + castables[i][0] + '">' + castables[i][0] + '</option>');
-            }
-        }
-    }).catch(err => handleError(err))
+			for(var i=0; i < castables.length; i++) {
+				$('#table_select').append('<option value="' + castables[i][0] + '">' + castables[i][0] + '</option>');
+			}
+		}
+	}).catch(err => handleError(err))
+	
 }
 
 async function initNewTable(){
-    //reset the row and filter for a new table selection
-    if(getSelectedCaslib() && getSelectedTable()) {
-        current_row = 1;
-        table_filter = '';
-        $('#table_filter').val(table_filter);
-
-        table_schema = await getColumnDetails();
-        total_rows = await getTotalRows();
-        loadTableData(current_row, page_rows);
-        $('#button_bar_div').show();
-    }
-
+	
+	//reset the row and filter for a new table selection
+	if(getSelectedCaslib() && getSelectedTable()){
+		current_row = 1;
+		table_filter = '';
+		$('#table_filter').val(table_filter);
+		
+		table_schema = await getColumnDetails();
+		total_rows = await getTotalRows();
+		loadTableData(current_row, page_rows);
+		$('#button_bar_div').show();
+	}
+	
 }
 
 function loadPreviousPage(){
-    current_row = current_row - page_rows;
-    last_row = (current_row + page_rows) - 1;
-    loadTableData(current_row, last_row);
+	current_row = current_row - page_rows;
+	last_row = (current_row + page_rows) - 1;
+	loadTableData(current_row, last_row);
+
 }
 
 function loadNextPage(){
-    current_row = current_row + page_rows;
-    last_row = (current_row + page_rows) - 1;
-    loadTableData(current_row, last_row);
+	current_row = current_row + page_rows;
+	last_row = (current_row + page_rows) - 1;
+	loadTableData(current_row, last_row);
 }
 
-async function refreshCurrentPage() {
-    last_row = (current_row + page_rows) - 1;
-    total_rows = await getTotalRows();
-    loadTableData(current_row, last_row);
+async function refreshCurrentPage(){
+	last_row = (current_row + page_rows) - 1;
+	total_rows = await getTotalRows();
+	loadTableData(current_row, last_row);
 }
 
-function jumpToRow(rownumber) {
-    current_row = eval(rownumber);
-    last_row = (current_row + page_rows) - 1;
-    loadTableData(current_row,last_row);
+function jumpToRow(rownumber){
+	current_row = eval(rownumber);
+	last_row = (current_row + page_rows) - 1;
+	loadTableData(current_row, last_row);
 }
 
 async function filterTable(filter){
-    table_filter = filter;
-    total_rows = await getTotalRows();
-
-    //could have an error
-    if (total_rows) {
-        current_row = 1;
-        loadTableData(current_row,page_rows);
-    }
+	table_filter = filter;
+	total_rows = await getTotalRows();
+	
+	//Could have an error
+	if(total_rows){
+		current_row = 1;
+		loadTableData(current_row, page_rows);
+	}
 }
 
-function setPageNavigationInfo(start,end) {
-    if(end > total_rows)
-        end = total_rows;
-        //TODO: determine what buttons might need to be disabled
-        $('#page_navigation_info').empty().append('Showing ' + start + ' to ' + end + ' of ' + total_rows + '  entries');
-
+function setPageNavigationInfo(start, end){
+	if(end > total_rows)
+		end = total_rows;
+	//TODO: Determine what buttons might need to be disabled
+	$('#page_navigation_info').empty().append('Showing ' + start + ' to ' + end + ' of ' + total_rows + '	entries');
+	
 }
 
 function addTableRow(){
