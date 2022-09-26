@@ -561,7 +561,7 @@ function runSASCode(){
 	const inputBody = {
 		"name": "proc sql example example",
 		"description": "sql test code",
-		"jobDefinitionUri": "/jobDefinitions/definitions/17c1f834-d8eb-4263-906c-0ac5d4ce97d7",
+		"jobDefinitionUri": "/jobDefinitions/definitions/17c1f834-d8eb-4263-906c-0ac5d4ce97d",
 	  };
 
 	  const headers = {
