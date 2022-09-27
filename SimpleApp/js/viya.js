@@ -1,4 +1,4 @@
-let store = restaf.initStore({casProxy: true});
+
 var currentSession;
 var viyahost = window.location.origin;
 var logged_user;
