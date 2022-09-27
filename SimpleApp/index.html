@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.development.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom.development.js"></script>
+		
+			
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	
+		
+		<script type="text/javascript" src="https://unpkg.com/@sassoftware/restaf@4.0.1/dist/restaf.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/@sassoftware/restaflib@4.0.1/dist/restaflib.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/@sassoftware/restafuilib@prod/dist/restafuilib.js"></script>
+		<script type="text/javascript" src="js/showAlert.js"></script>
+		<script type="text/javascript" src="js/util.js"></script>
+		<script type="text/javascript" src="js/viya.js"></script>
+		<link rel="stylesheet" href="css/viya.css">
+		<script src="https://unpkg.com/restaf-uicomponents@prod/dist/restaf-uicomponents.js"></script>
+
+
+		<title>restAF Compute Server Example</title>
+
+	</head>
+
+	<body>
+		
+		<h1> restAF at Work - Simple DMS Example </h1>
+		<div id="container">
+			<div id="sourcediv" class="rafuip-main-content">
+			 <p> Code here </p>
+			</div>
+		</div>
+	<br>
+	<div id="results" class="rafuip-main-content">
+		<ul>
+			<li>  <button  id='log' onclick="onClickLog()" > Log </button></li>
+			<li>  <button  id='listing' onclick="onClickListing()" > Listing </button></li>
+			<li>  <button  id='ods' onclick="onClickODS()" > Ods </button></li>
+	
+		</ul>
+		<div id="SASContent">
+			<p> Your output will appear here </p>
+		 </div>
+	
+	</div>
+
+	</body>
+
+</html>
