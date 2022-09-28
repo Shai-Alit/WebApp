@@ -1,4 +1,3 @@
-let restaf = require('restaf');
 let store = restaf.initStore({casProxy: true});
 var currentSession;
 var viyahost = window.location.origin;
