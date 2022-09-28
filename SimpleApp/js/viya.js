@@ -96,6 +96,7 @@ function uiInit(){
         runCode();
     }).catch( err => handleError(err));
 
+    console.log("init complete");
 }
 
 async function runCode() {
