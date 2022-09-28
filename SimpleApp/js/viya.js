@@ -52,7 +52,7 @@ function handleError(err){
 
 }
 
-async function mainLoop (store, compute, code) {
+async function mainLoop (store, session, code) {
 
     // Define the payload
     // This is your SAS program
@@ -77,5 +77,5 @@ async function mainLoop (store, compute, code) {
 }
 let code =  [`data _null_; do i = 1 to 100; x=1; end; run; `];
 appInit()
-    .then(mainLoop(store,null,code))
+    .then(session => mainLoop(store,session,code))
     .catch(err => handleError(err));
