@@ -114,6 +114,7 @@ async function runCode() {
         macros
     );
     console.log("pause");
+    loadTableData();
 }
 
 function loadTableData(){
