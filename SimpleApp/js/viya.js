@@ -1,4 +1,4 @@
-let restaf = require('restaf');
+
 let store = restaf.initStore({casProxy: true});
 var currentSession;
 var viyahost = window.location.origin;
@@ -27,7 +27,7 @@ async function appInit(){
         let msg = await store.logon(p);
         
         
-        /**
+        let {compute} = await store.addServices( 'compute' );
         let contexts = await store.apiCall( compute.links( 'contexts' ) );
         let context0 = contexts.itemsList( 0 );
         session      = await store.apiCall( contexts.itemsCmd( context0, 'createSession') )
@@ -36,7 +36,7 @@ async function appInit(){
         let c = await store.apiCall(identities.links('currentUser'));
         logged_user = c.items('id');
         currentSession = session;
-        **/
+        
     }
     catch (err) {
         handleError(err);
@@ -57,7 +57,7 @@ function handleError(err){
 }
 
 async function mainLoop (store, code) {
-    let {compute} = await store.addServices( 'compute' );
+    
     // get the list of contexts for compute server
     // This of contexts as your SAS configs
     let contexts = await store.apiCall(compute.links('contexts'));
@@ -93,5 +93,21 @@ async function mainLoop (store, code) {
 
 let code =  [`data _null_; do i = 1 to 100; x=1; end; run; `];
 appInit()
-    .then(mainLoop(store,code))
+    .then(runCode())
     .catch(err => handleError(err));
+
+async function runCode() {
+    let {computeSetup, computeRun} = restaflib;
+    let computeSession = await computeSetup(store, null);
+    let macros={"make": Acura};
+    var code = 'filename mdlfldr filesrvc folderpath= "/Public/Shared/Sean Ford";';
+    code += '%include mdlfldr("sql_macro.sas");';
+    code += '%carmake(make = ' + make + ');';
+
+    let computeSummary = await computeRun(
+        store,
+        computeSession,
+        code,
+        macros
+    );
+}
