@@ -113,3 +113,16 @@ async function runCode() {
         macros
     );
 }
+
+function loadTableData(){
+	
+	let payload = {
+		action: 'table.fetch',
+		data  : {'table': { 'name': 'cars_small', 'caslib': 'seford_s', 'where': table_filter}, 'from':0, 'to': 1}
+	}
+
+	store.runAction(currentSession, payload).then ( r => {
+        console.log(r);
+	}).catch(err => handleError(err))
+	
+}
