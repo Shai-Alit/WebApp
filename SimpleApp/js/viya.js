@@ -38,7 +38,7 @@ async function appInit(){
         handleError(err);
     }
 		
-    return compute;
+    return session;
 }
 
 /**
@@ -77,5 +77,5 @@ async function mainLoop (store, compute, code) {
 }
 let code =  [`data _null_; do i = 1 to 100; x=1; end; run; `];
 appInit()
-    .then(compute =>mainLoop(store,compute,code))
+    .then(mainLoop(store,compute,code))
     .catch(err => handleError(err));
