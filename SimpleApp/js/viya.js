@@ -89,10 +89,14 @@ async function mainLoop (store, code) {
     return 'restAF is cool or what';
 }
 
-let code =  [`data _null_; do i = 1 to 100; x=1; end; run; `];
-appInit()
-    .then(runCode())
-    .catch(err => handleError(err));
+function uiInit(){
+
+    appInit().then ( session => {
+        currentSession = session;
+        runCode();
+    }).catch( err => handleError(err));
+
+}
 
 async function runCode() {
     let {computeSetup, computeRun} = restaflib;
