@@ -1,5 +1,4 @@
 
-let store = restaf.initStore({casProxy: true});
 var currentSession;
 var viyahost = window.location.origin;
 var logged_user;
@@ -26,7 +25,6 @@ async function appInit(){
     try {
         let msg = await store.logon(p);
         
-        
         let {compute} = await store.addServices( 'compute' );
         let contexts = await store.apiCall( compute.links( 'contexts' ) );
         let context0 = contexts.itemsList( 0 );
@@ -42,7 +40,7 @@ async function appInit(){
         handleError(err);
     }
 		
-    return msg;
+    return session;
 }
 
 /**
@@ -52,7 +50,7 @@ async function appInit(){
 **/
 function handleError(err){
 
-	console.error(err);
+	console.log(err);
 
 }
 
