@@ -41,7 +41,7 @@ async function appInit(){
         handleError(err);
     }
 		
-    return compute;
+    return msg;
 }
 
 /**
