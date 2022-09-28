@@ -77,5 +77,5 @@ async function mainLoop (store, compute, code) {
 }
 let code =  [`data _null_; do i = 1 to 100; x=1; end; run; `];
 appInit()
-    .then(mainLoop(store,compute,code))
+    .then(mainLoop(store,null,code))
     .catch(err => handleError(err));
