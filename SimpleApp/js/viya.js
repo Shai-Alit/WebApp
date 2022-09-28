@@ -24,8 +24,6 @@ async function appInit(){
         let contexts = await store.apiCall( compute.links( 'contexts' ) );
         let context0 = contexts.itemsList( 0 );
         session      = await store.apiCall( contexts.itemsCmd( context0, 'createSession') )
-        document.getElementById( 'results' ).style.visibility = 'hidden';
-        editor();
 
         let { identities } = await store.addServices('identities');
         let c = await store.apiCall(identities.links('currentUser'));
@@ -46,11 +44,9 @@ async function appInit(){
 **/
 function handleError(err){
 
-	var errorList = JSON.parse(err).logEntries;
-
 	console.error(err);
 
 }
 
- console.log(appInit());
+ console.log("session details" + appInit());
  console.log(logged_user)
