@@ -24,7 +24,9 @@ async function appInit(){
 
     try {
         let msg = await store.logon(p);
+        
         let {compute} = await store.addServices( 'compute' );
+        /**
         let contexts = await store.apiCall( compute.links( 'contexts' ) );
         let context0 = contexts.itemsList( 0 );
         session      = await store.apiCall( contexts.itemsCmd( context0, 'createSession') )
@@ -33,12 +35,13 @@ async function appInit(){
         let c = await store.apiCall(identities.links('currentUser'));
         logged_user = c.items('id');
         currentSession = session;
+        **/
     }
     catch (err) {
         handleError(err);
     }
 		
-    return session;
+    return compute;
 }
 
 /**
@@ -52,7 +55,18 @@ function handleError(err){
 
 }
 
-async function mainLoop (store, session, code) {
+async function mainLoop (store, compute, code) {
+
+    // get the list of contexts for compute server
+    // This of contexts as your SAS configs
+    let contexts = await store.apiCall(compute.links('contexts'));
+
+    // lookup the name of the context and create a SAS session with that information
+    // In the example we pick the first context that is returned.
+    // the itemList function returns the list of contexts
+    let context       = contexts.itemsList(0);
+    let createSession = contexts.itemsCmd(context, 'createSession');
+    let session       = await store.apiCall(createSession);
 
     // Define the payload
     // This is your SAS program
@@ -75,7 +89,8 @@ async function mainLoop (store, session, code) {
     }
     return 'restAF is cool or what';
 }
+
 let code =  [`data _null_; do i = 1 to 100; x=1; end; run; `];
 appInit()
-    .then(session => mainLoop(store,session,code))
+    .then(compute => mainLoop(store,compute,code))
     .catch(err => handleError(err));
