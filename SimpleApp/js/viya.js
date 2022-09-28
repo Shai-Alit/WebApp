@@ -25,7 +25,7 @@ async function appInit(){
     try {
         let msg = await store.logon(p);
         
-        let {compute} = await store.addServices( 'compute' );
+        
         /**
         let contexts = await store.apiCall( compute.links( 'contexts' ) );
         let context0 = contexts.itemsList( 0 );
@@ -55,8 +55,8 @@ function handleError(err){
 
 }
 
-async function mainLoop (store, compute, code) {
-
+async function mainLoop (store, code) {
+    let {compute} = await store.addServices( 'compute' );
     // get the list of contexts for compute server
     // This of contexts as your SAS configs
     let contexts = await store.apiCall(compute.links('contexts'));
@@ -92,5 +92,5 @@ async function mainLoop (store, compute, code) {
 
 let code =  [`data _null_; do i = 1 to 100; x=1; end; run; `];
 appInit()
-    .then(compute => mainLoop(store,compute,code))
+    .then(mainLoop(store,code))
     .catch(err => handleError(err));
