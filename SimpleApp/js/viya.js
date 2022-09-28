@@ -96,7 +96,7 @@ function uiInit(){
         runCode();
     }).catch( err => handleError(err));
 
-    console.log("init complete");
+    console.log("pause");
 }
 
 async function runCode() {
@@ -113,6 +113,7 @@ async function runCode() {
         code,
         macros
     );
+    console.log("pause");
 }
 
 function loadTableData(){
@@ -125,5 +126,7 @@ function loadTableData(){
 	store.runAction(currentSession, payload).then ( r => {
         console.log(r);
 	}).catch(err => handleError(err))
+
+    console.log("pause");
 	
 }
