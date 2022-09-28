@@ -38,7 +38,7 @@ async function appInit(){
         handleError(err);
     }
 		
-    return session;
+    return compute;
 }
 
 /**
