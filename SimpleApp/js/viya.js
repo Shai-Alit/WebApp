@@ -101,7 +101,7 @@ function uiInit(){
 async function runCode() {
     let {computeSetup, computeRun} = restaflib;
     let computeSession = await computeSetup(store, null);
-    let macros={"make": Acura};
+    let macros={"make": "Acura"};
     var code = 'filename mdlfldr filesrvc folderpath= "/Public/Shared/Sean Ford";';
     code += '%include mdlfldr("sql_macro.sas");';
     code += '%carmake(make = ' + make + ');';
