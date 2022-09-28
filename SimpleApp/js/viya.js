@@ -121,7 +121,7 @@ function loadTableData(){
 	
 	let payload = {
 		action: 'table.fetch',
-		data  : {'table': { 'name': 'cars_small', 'caslib': 'seford_s'}, 'from':0, 'to': 1}
+		data  : {'table': { 'name': "cars_small", 'caslib': "seford_s"}, 'from':0, 'to': 1}
 	}
 
 	store.runAction(currentSession, payload).then ( r => {
