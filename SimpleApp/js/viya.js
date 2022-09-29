@@ -1,5 +1,8 @@
 
 var currentSession;
+var servers;
+var server_session;
+var serverName;
 var viyahost = window.location.origin;
 var logged_user;
 
@@ -118,7 +121,7 @@ async function runCode() {
         code,
         macros
     );
-    console.log("pause");
+    console.log(computeSummary.SASJobStatus);
     loadTableData();
 }
 
