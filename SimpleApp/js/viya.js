@@ -25,10 +25,15 @@ async function appInit(){
     try {
         let msg = await store.logon(p);
         
-        let {compute} = await store.addServices( 'compute' );
+        let {compute} = await store.addServices( 'compute', );
+        let {casManagement} = await store.addServices ('casManagement');
+        let servers = await store.apiCall(casManagement.links('servers'));
         let contexts = await store.apiCall( compute.links( 'contexts' ) );
         let context0 = contexts.itemsList( 0 );
         session      = await store.apiCall( contexts.itemsCmd( context0, 'createSession') )
+
+        let serverName = servers.itemsList(0);
+        let server_session = await store.apiCall(servers.itemsCmd(serverName, 'createSession'));
 
         let { identities } = await store.addServices('identities');
         let c = await store.apiCall(identities.links('currentUser'));
@@ -124,7 +129,7 @@ function loadTableData(){
 		data  : {'table': { 'name': "cars_small", 'caslib': "seford_s"}, 'from':0, 'to': 1}
 	}
 
-	store.runAction(currentSession, payload).then ( r => {
+	store.runAction(server_session, payload).then ( r => {
         console.log(r);
 	}).catch(err => handleError(err))
 
