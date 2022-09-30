@@ -21,7 +21,7 @@
 		<script src="js/viya.js"></script>
 
 
-		<title>Viya Logbook Example</title>
+		<title>Logbook Data Editor</title>
 
 		<script>
 			let store = restaf.initStore({casProxy: true});
@@ -38,9 +38,9 @@
 			  <!-- NAVIGATION MENUS -->
 			  <div class="menu">
 				<li><a href="index.html">Logbook</a></li>
-				<li><a href="DataEditor.html">Data Editor</a></li>
+                <li><a href="DataEditor.html">DataEditor</a></li>
 				<li class="services">
-					<a href="/">Graph</a>
+					<a href="">Graph</a>
 					<ul class="dropdown">
 						<li><a href="/">Graph 1 </a></li>
 						<li><a href="/">Graph 2</a></li>
@@ -74,24 +74,21 @@
 
 			<div class="row">
 				<div class="col-sm-12">
-					<label for="process_area">PROCESS AREA</label>
 					<div class="form-row">
-
 						<div class="col-md-3">
-							<select class="form-control" required onchange="dropdown1Function();" id="dropdown1" name="dropdown1">
-								<option value="*ALL*">*ALL*</option>
-							</select>
-						</div>
-						
-						<div class="col-md-3">
-							<select class="form-control" required onchange="getAvailableProcess();" id="caslib_select" name="caslib_select">
+							<label for="caslib_select">CAS Libraries</label>
+							<select class="form-control" required onchange="loadCaslibTables();" id="caslib_select" name="caslib_select">
 								<option value="">Please select a CAS library</option>
 							</select>
 						</div>
 						<div class="col-md-3">
-							<select class="form-control" required onchange="processSelectFunction();" id="process_select" name="process_select">
-								<option value=""></option>
+							<label for="table_select">CAS Tables</label>
+							<select class="form-control" required onchange="initNewTable();" id="table_select" name="table_select">
+								<option value="">Please select a CAS table</option>
 							</select>
+						</div>
+						<div class="col-md-3 align-self-end ml-auto">
+							<button type="button" id="add_table_row" onclick="addTableRow();" class="btn btn-primary btn-block">Add Table Row</button>
 						</div>
 					</div>
 				</div>
@@ -133,6 +130,48 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="modal fade" id="update_data_modal" tabindex="-1" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form role="form" id="updateTableDataForm" class="updateTableDataForm">
+						<div class="modal-header" id="updateTableHeader"></div>
+						<div class="modal-body" id="updateTableBody"></div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="submit" id="submitUpdateTableButton" class="btn btn-secondary"></button>
+						</div>
+						<input type="hidden" id="updateTableIndex" name="updateTableIndex" value=""/>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="delete_data_modal" tabindex="-1" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form role="form" id="confirmDeleteDataForm" class="confirmDeleteDataForm">
+						<div class="modal-header">
+							Delete Selected Row
+						</div>
+						<div class="modal-body">
+							<div  class="alert alert-danger">
+								Are you sure you want to delete the selected row?
+							</div>
+							<input type="hidden" id="delete_row_index" name="delete_row_index" value=""/>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-danger">Delete Row</button>
+						</div>
+						<input type="hidden" id="delete_index" name="delete_index" value=""/>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		
+
 	</body>
 
 </html>

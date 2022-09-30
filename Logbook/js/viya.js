@@ -106,14 +106,26 @@ async function initNewTable(){
 	//reset the row and filter for a new table selection
 	if(getSelectedCaslib() && getSelectedTable()){
 		current_row = 1;
-		table_filter = '';
-		$('#table_filter').val(table_filter);
 		
 		table_schema = await getColumnDetails();
 		total_rows = await getTotalRows();
 		loadTableData(current_row, page_rows);
 		$('#button_bar_div').show();
 	}
+	
+}
+
+async function f_initNewTable(caslib,table){
+	
+	//reset the row and filter for a new table selection
+
+		current_row = 1;
+		
+		table_schema = await f_getColumnDetails();
+		total_rows = await f_getTotalRows();
+		f_loadTableData(current_row, page_rows);
+		$('#button_bar_div').show();
+	
 	
 }
 
@@ -416,11 +428,50 @@ function drawTable(){
 	$('#cas_table').empty().append(html);
 }
 
+function f_drawTable(table){
+		
+	var html = '';
+	
+	var columnData = f_getColumnData(table);
+	html += '<thead><tr>';
+	for(var i=0; i < columnData.length; i++){
+		if(i === 0)
+			html += '<th scope="col" width="1%"></th>';
+		else
+			html += '<th scope="col">' + columnData[i].title + '</th>';
+	}
+	html += '</tr></thead>';
+	
+	html += '<tbody>';
+	var rowData = f_getTableRows(table);
+	for(var i=0; i < rowData.length; i++){
+		
+		html += '<tr>';
+		var row = rowData[i];
+		for(var j=0; j < row.length; j++){
+			if(j === 0){
+				html += '<td nowrap scope="row">';
+				html += '<button type="button" class="btn btn-secondary" onclick="editTableRow(' + row[j] + ');">Edit</button>&nbsp;';
+				html += '<button type="button" class="btn btn-danger" onclick="deleteTableRow(' + row[j] + ');">Delete</button>';
+				html += '</td>';
+			}else
+				html += '<td scope="row">' + row[j] + '</td>';
+			
+		}
+		html += '</tr>';
+	}
+	
+	html += '</tbody>';
+	$('#cas_table').empty().append(html);
+}
+
+
+
 function loadTableData(startRow, endRow){
 	
 	let payload = {
 		action: 'table.fetch',
-		data  : {'table': { 'name': getSelectedTable(), 'caslib': getSelectedCaslib()},'fetchVars':"PROCESS", 'from':startRow, 'to': endRow}
+		data  : {'table': { 'name': getSelectedTable(), 'caslib': getSelectedCaslib()}, 'from':startRow, 'to': endRow}
 	}
 
 	store.runAction(currentSession, payload).then ( r => {
@@ -429,6 +480,40 @@ function loadTableData(startRow, endRow){
 		drawTable();
 		setPageNavigationInfo(startRow, endRow);
 	}).catch(err => handleError(err))
+	
+}
+
+function f_loadTableData(table, caslib, fetchvars, startRow, endRow){
+	
+	if (fetchvars === ""){
+		let payload = {
+			action: 'table.fetch',
+			data  : {'table': { 'name': table, 'caslib': caslib}, 'from':startRow, 'to': endRow}
+		}
+	}
+	else 
+	{
+		let payload = {
+			action: 'table.fetch',
+			data  : {'table': { 'name': table, 'caslib': caslib},'fetchVars':fetchvars, 'from':startRow, 'to': endRow}
+		}
+	}
+
+	store.runAction(currentSession, payload).then ( r => {
+		setColumnData(r.items('results', 'Fetch').toJS().schema);
+		setTableRows(r.items('results', 'Fetch').toJS().rows);
+		drawTable();
+		setPageNavigationInfo(startRow, endRow);
+	}).catch(err => handleError(err))
+	
+}
+
+
+function drowdown1Function() {
+
+}
+
+function drowdown2Function() {
 	
 }
 
@@ -454,11 +539,75 @@ async function getTotalRows(){
 	
 }
 
+async function f_getTotalRows(caslib, table){
+
+
+	count_query={'query': 'select count(*) from ' + caslib + '.' + table};
+	let payload = {
+		action: 'fedSql.execDirect',
+		data  : count_query
+	}
+	
+	try{
+		let records = await store.runAction(currentSession, payload);
+		return records.items('results', 'Result Set').toJS().rows[0][0];
+	}catch(err){
+		handleError(err);
+		return null;
+	}
+	
+}
+
+async function getAvailableProcess(caslib){
+
+
+	query={'query': 'select distinct PROCESS from ' + caslib + '.PROCESS'};
+	let payload = {
+		action: 'fedSql.execDirect',
+		data  : query
+	}
+	
+	try{
+		let records = await store.runAction(currentSession, payload).then(r=> {
+			tableInfo = r.items("results", "TableInfo");
+			cleanupSelector('process_select');
+			if(tableInfo){
+				process_options = tableInfo.toJS().rows;
+	
+				for(var i=0; i < process_options.length; i++) {
+					$('#process_select').append('<option value="' + process_options[i][0] + '">' + process_options[i][0] + '</option>');
+				}
+			}
+		});
+	}catch(err){
+		handleError(err);
+		return null;
+	}
+	
+}
+
 async function getColumnDetails(){
 
 	let payload = {
 		action: 'table.columnInfo',
 		data  : {'table': { 'name': getSelectedTable(), 'caslib': getSelectedCaslib(), 'computedOnDemand':true}}
+	}
+
+	try{
+		let tableDetail = await store.runAction(currentSession, payload);
+		return tableDetail.items('results', 'ColumnInfo').toJS().rows;
+	}catch(err){
+		handleError(err);
+		return null;
+	}
+	
+}
+
+async function f_getColumnDetails(caslib,table){
+
+	let payload = {
+		action: 'table.columnInfo',
+		data  : {'table': { 'name': caslib, 'caslib': table, 'computedOnDemand':true}}
 	}
 
 	try{
