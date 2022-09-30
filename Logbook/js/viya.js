@@ -39,7 +39,7 @@ async function appInit(){
 	let { identities } = await store.addServices('identities');
     let c = await store.apiCall(identities.links('currentUser'));
 	logged_user = c.items('id');
-		
+	$("#status_message").empty().append(logged_user);
     return session;
 }
 
