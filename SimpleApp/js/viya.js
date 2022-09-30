@@ -101,7 +101,7 @@ function uiInit(){
 
     appInit().then ( session => {
         currentSession = session;
-        runCode();
+        loadTableData();
     }).catch( err => handleError(err));
 
     console.log("pause");
@@ -129,7 +129,7 @@ function loadTableData(){
 	
 	let payload = {
 		action: 'table.fetch',
-		data  : {'table': { 'name': "cars_small", 'caslib': "seford_s"}, 'from':0, 'to': 1}
+		data  : {'table': { 'name': "active", 'caslib': "seford_s"}, 'from':0, 'to': 1}
 	}
 
 	store.runAction(server_session, payload).then ( r => {
