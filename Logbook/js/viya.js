@@ -420,7 +420,7 @@ function loadTableData(startRow, endRow){
 	
 	let payload = {
 		action: 'table.fetch',
-		data  : {'table': { 'name': getSelectedTable(), 'caslib': getSelectedCaslib()},'fetchVars':"{PROCESS}", 'from':startRow, 'to': endRow}
+		data  : {'table': { 'name': getSelectedTable(), 'caslib': getSelectedCaslib()},'fetchVars':"PROCESS", 'from':startRow, 'to': endRow}
 	}
 
 	store.runAction(currentSession, payload).then ( r => {
