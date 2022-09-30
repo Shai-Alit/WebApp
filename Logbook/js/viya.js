@@ -566,15 +566,15 @@ async function getAvailableProcess(){
 		action: 'fedSql.execDirect',
 		data  : query
 	}
-	
+	console.log(query);
 	try{
 		let records = await store.runAction(currentSession, payload).then(r=> {
 			tableInfo = r.items("results", "TableInfo");
 			cleanupSelector('process_select');
-			
+			console.log(tableInfo);
 			if(tableInfo){
 				process_options = tableInfo.toJS().rows;
-	
+				console.log(process_options);
 				for(var i=0; i < process_options.length; i++) {
 					$('#process_select').append('<option value="' + process_options[i][0] + '">' + process_options[i][0] + '</option>');
 				}
