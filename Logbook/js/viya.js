@@ -39,7 +39,7 @@ async function appInit(){
 	let { identities } = await store.addServices('identities');
     let c = await store.apiCall(identities.links('currentUser'));
 	logged_user = c.items('id');
-	$("#status_message").empty().append("user " + logged_user + " on dev eng " + serverName);
+	$("#user_info").empty().append("user " + logged_user + " on dev env " + viyahost);
     return session;
 }
 
