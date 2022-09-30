@@ -558,10 +558,10 @@ async function f_getTotalRows(caslib, table){
 	
 }
 
-async function getAvailableProcess(caslib){
+async function getAvailableProcess(){
 
 
-	query={'query': 'select distinct PROCESS from ' + caslib + '.PROCESS'};
+	query={'query': 'select distinct PROCESS from ' + getSelectedCaslib() + '.PROCESS'};
 	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
