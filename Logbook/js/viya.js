@@ -481,20 +481,6 @@ function loadTableData(startRow, endRow){
 
 async function f_loadTableData(table, fetchvars){
 	
-	if (fetchvars === ""){
-		let payload = {
-			action: 'table.fetch',
-			data  : {'table': { 'name': table, 'caslib': getSelectedCaslib()}, 'from':startRow, 'to': endRow}
-		}
-	}
-	else 
-	{
-		let payload = {
-			action: 'table.fetch',
-			data  : {'table': { 'name': table, 'caslib': getSelectedCaslib()},'fetchVars':fetchvars, 'from':startRow, 'to': endRow}
-		}
-	}
-
 	query={'query': 'select PROCESS,BATCH,MODDATE,TYPE,LOT from ' + getSelectedCaslib() + '.' + table + ' where PROCESS="' + getSelectedProcess() + '"'};
 	let payload = {
 		action: 'fedSql.execDirect',
