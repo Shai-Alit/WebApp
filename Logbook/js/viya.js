@@ -409,12 +409,6 @@ function drawTable(){
 		html += '<tr>';
 		var row = rowData[i];
 		for(var j=0; j < row.length; j++){
-			if(j === 0){
-				html += '<td nowrap scope="row">';
-				html += '<button type="button" class="btn btn-secondary" onclick="editTableRow(' + row[j] + ');">Edit</button>&nbsp;';
-				html += '<button type="button" class="btn btn-danger" onclick="deleteTableRow(' + row[j] + ');">Delete</button>';
-				html += '</td>';
-			}else
 				html += '<td scope="row">' + row[j] + '</td>';
 			
 		}
