@@ -570,6 +570,9 @@ async function getAvailableProcess(){
 	try{
 		let records = await store.runAction(currentSession, payload).then(r=> {
 			console.log("ran action");
+			setColumnData(r.items('results', 'Fetch').toJS().schema);
+		setTableRows(r.items('results', 'Fetch').toJS().rows);
+		drawTable();
 			tableInfo = r.items("results", "TableInfo");
 			cleanupSelector('process_select');
 			console.log(tableInfo);
@@ -605,11 +608,11 @@ async function getColumnDetails(){
 	
 }
 
-async function f_getColumnDetails(caslib,table){
+async function f_getColumnDetails(table){
 
 	let payload = {
 		action: 'table.columnInfo',
-		data  : {'table': { 'name': caslib, 'caslib': table, 'computedOnDemand':true}}
+		data  : {'table': { 'name': getSelectedTable(), 'caslib': table, 'computedOnDemand':true}}
 	}
 
 	try{
