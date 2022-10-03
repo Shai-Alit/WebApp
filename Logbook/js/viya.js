@@ -480,7 +480,7 @@ function loadTableData(startRow, endRow){
 
 async function f_loadTableData(table,startRow){
 	
-	query={'query': 'select PROCESS, BATCH, STOP,TYPE,LOT from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'' + getSelectedProcess() +'\''};
+	query={'query': 'select PROCESS, BATCH, put(STOP,datetime.) as date_time,TYPE,LOT from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'' + getSelectedProcess() +'\''};
 	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
