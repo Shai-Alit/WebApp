@@ -120,8 +120,7 @@ async function f_initNewTable(){
 	//reset the row and filter for a new table selection
 
 		current_row = 1;
-		table_schema = await f_getColumnDetails("active_mod",["PROCESS", "BATCH", "STOP","TYPE","LOT"]);
-		f_loadTableData("active_mod","");
+		f_loadTableData("active_mod",current_row);
 		$('#button_bar_div').show();
 	
 	
@@ -479,7 +478,7 @@ function loadTableData(startRow, endRow){
 	
 }
 
-async function f_loadTableData(table, fetchvars){
+async function f_loadTableData(table,startRow){
 	
 	query={'query': 'select PROCESS, BATCH, STOP,TYPE,LOT from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'' + getSelectedProcess() +'\''};
 	let payload = {
@@ -489,11 +488,17 @@ async function f_loadTableData(table, fetchvars){
 
 	let records = await store.runAction(currentSession, payload);
 	let z = records.items('results', 'Result Set').toJS().rows;
-	let entries = z.length;
+	total_rows = z.length;
 
-	entries_textbox.value = entries;
-	
+	entries_textbox.value = total_rows;
+	table_schema = records.items('results','Result Set','schema').toJS();
 	getBeginEnd(table);
+
+	setColumnData(table_schema);
+	setTableRows(z);
+	drawTable();
+	setPageNavigationInfo(startRow,total_rows);
+
 }
 
 async function getBeginEnd(table){
