@@ -571,34 +571,9 @@ async function getAvailableProcess(){
 	try{
 		let records = await store.runAction(currentSession, p);
 		let z = records.items('results', 'Result Set').toJS().rows;
-		let foo = 0;
-	}catch(err){
-		handleError(err);
-		return null;
-	}
-
-		console.log("getAvailableProcess");
-	query={'query': 'select * from ' + getSelectedCaslib() + '.PROCESS'};
-	let payload = {
-		action: 'fedSql.execDirect',
-		data  : query
-	}
-	console.log(query);
-	try{
-		let records = await store.runAction(currentSession, payload).then(r=> {
-			console.log("ran action");
-
-			tableInfo = r.items("results", "TableInfo");
-			cleanupSelector('process_select');
-			console.log(tableInfo);
-			if(tableInfo){
-				process_options = tableInfo.toJS().rows;
-				console.log(process_options);
-				for(var i=0; i < process_options.length; i++) {
-					$('#process_select').append('<option value="' + process_options[i][0] + '">' + process_options[i][0] + '</option>');
-				}
-			}
-		});
+		for(var i=0; i < z.length; i++) {
+			$('#process_select').append('<option value="' + z[i][0] + '">' + zz[i][0] + '</option>');
+		}
 	}catch(err){
 		handleError(err);
 		return null;
