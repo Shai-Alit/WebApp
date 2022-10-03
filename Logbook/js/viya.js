@@ -562,10 +562,10 @@ async function getAvailableProcess(){
 
 	
 
-	count_query={'query': 'select * from ' + getSelectedCaslib() + '.' + 'PROCESS'};
+	query={'query': 'select distinct PROCESS from ' + getSelectedCaslib() + '.' + 'PROCESS'};
 	let p = {
 		action: 'fedSql.execDirect',
-		data  : count_query
+		data  : query
 	}
 	
 	try{
