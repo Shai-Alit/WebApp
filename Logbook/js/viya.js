@@ -572,7 +572,7 @@ async function getAvailableProcess(){
 		let records = await store.runAction(currentSession, p);
 		let z = records.items('results', 'Result Set').toJS().rows;
 		for(var i=0; i < z.length; i++) {
-			$('#process_select').append('<option value="' + z[i][0] + '">' + zz[i][0] + '</option>');
+			$('#process_select').append('<option value="' + z[i][0] + '">' + z[i][0] + '</option>');
 		}
 	}catch(err){
 		handleError(err);
