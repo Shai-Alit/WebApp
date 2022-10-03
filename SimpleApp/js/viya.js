@@ -26,18 +26,13 @@ async function appInit(){
 	}
 
     try {
+        let { computeSetup, computeRun } = restaflib;
         let msg = await store.logon(p);
+
+        let computeContext = null; 
+
+        let computeSession = await computeSetup(store, computeContext);
         
-        let {compute} = await store.addServices('compute' );
-        let servers = await store.apiCall(compute.links('servers'));
-
-        let serverName = servers.itemsList(0);
-        let server_session = await store.apiCall(servers.itemsCmd(serverName, 'createSession'));
-
-        let { identities } = await store.addServices('identities');
-        let c = await store.apiCall(identities.links('currentUser'));
-        logged_user = c.items('id');
-        currentSession = server_session;
         
     }
     catch (err) {
@@ -104,9 +99,9 @@ function uiInit(){
 }
 
 async function runCode() {
-    let {computeSetup, computeRun} = restaflib;
 
     var code = 'filename mdlfldr filesrvc folderpath= "/Public/Shared/Sean Ford";';
+    macros={'make':'Acura'}
     code += '%include mdlfldr("sql_macro.sas");';
     code += '%carmake(make = ' + "Acura" + ');';
 
@@ -137,7 +132,6 @@ function loadTableData(){
 
 async function runSASCode(){
 
-    let {computeSetup, computeRun} = restaflib;
 	//let computeSession = await computeSetup(store, null);
     let macros={"make": 'Acura'};
     var code = 'filename mdlfldr filesrvc folderpath= "/Public/Shared/Sean Ford";';
@@ -146,7 +140,7 @@ async function runSASCode(){
 
     let computeSummary = await computeRun(
         store,
-        currentSession,
+        computeSession,
         code,
         macros
     );
