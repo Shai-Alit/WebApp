@@ -481,7 +481,7 @@ function loadTableData(startRow, endRow){
 
 async function f_loadTableData(table, fetchvars){
 	
-	query={'query': 'select PROCESS from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=HZ01SULF'};
+	query={'query': 'select PROCESS from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'HZ01SULF\''};
 	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
