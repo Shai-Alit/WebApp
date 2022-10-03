@@ -492,7 +492,7 @@ async function f_loadTableData(table, fetchvars){
 	let entries = z.length;
 
 	query={'query': 'select MIN(START) as begin_date, MAX(STOP) as end_date from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'' + getSelectedProcess() +'\''};
-	let p = {
+	payload = {
 		action: 'fedSql.execDirect',
 		data  : query
 	}
