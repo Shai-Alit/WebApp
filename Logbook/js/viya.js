@@ -120,7 +120,7 @@ async function f_initNewTable(){
 	//reset the row and filter for a new table selection
 
 		current_row = 1;
-		table_schema = await f_getColumnDetails("active_mode",["PROCESS", "BATCH", "STOP","TYPE","LOT"]);
+		table_schema = await f_getColumnDetails("active_mod",["PROCESS", "BATCH", "STOP","TYPE","LOT"]);
 		f_loadTableData("active_mod","");
 		$('#button_bar_div').show();
 	
