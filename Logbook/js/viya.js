@@ -493,11 +493,11 @@ async function f_loadTableData(table, fetchvars){
 
 	entries_textbox.value = entries;
 	
-	loadInputBoxes();
+	getBeginEnd(table);
 }
 
-async function loadInputBoxes(){
-	query={'query': 'select STARTDATETIME, STOP from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'' + getSelectedProcess() +'\''};
+async function getBeginEnd(table){
+	query={'query': 'select MIN(STARTDATETIME) as begin_time, MAX(STOP) as end_time from ' + getSelectedCaslib() + '.' + table + ' where PROCESS=\'' + getSelectedProcess() +'\''};
 	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
