@@ -497,7 +497,7 @@ async function f_loadTableData(table, fetchvars){
 }
 
 async function loadInputBoxes(){
-	query={'query': 'select PROCESS, BATCH, STOP,TYPE,LOT from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'' + getSelectedProcess() +'\''};
+	query={'query': 'select STOP from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'' + getSelectedProcess() +'\''};
 	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
