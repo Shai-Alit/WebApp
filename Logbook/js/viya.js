@@ -395,9 +395,7 @@ function drawTable(){
 	var columnData = getColumnData();
 	html += '<thead><tr>';
 	for(var i=0; i < columnData.length; i++){
-		if(i === 0)
-			html += '<th scope="col" width="1%"></th>';
-		else
+
 			html += '<th scope="col">' + columnData[i].title + '</th>';
 	}
 	html += '</tr></thead>';
