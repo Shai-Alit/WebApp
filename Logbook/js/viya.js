@@ -561,7 +561,7 @@ async function f_getTotalRows(caslib, table){
 async function getAvailableProcess(){
 
 		console.log("getAvailableProcess");
-	query={'query': 'select PROCESS from ' + getSelectedCaslib() + '.PROCESS'};
+	query={'query': 'select * from ' + getSelectedCaslib() + '.PROCESS'};
 	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
@@ -569,6 +569,7 @@ async function getAvailableProcess(){
 	console.log(query);
 	try{
 		let records = await store.runAction(currentSession, payload).then(r=> {
+			console.log("ran action");
 			tableInfo = r.items("results", "TableInfo");
 			cleanupSelector('process_select');
 			console.log(tableInfo);
