@@ -560,6 +560,23 @@ async function f_getTotalRows(caslib, table){
 
 async function getAvailableProcess(){
 
+	
+
+	count_query={'query': 'select count(*) from ' + getSelectedCaslib() + '.' + 'PROCESS'};
+	let p = {
+		action: 'fedSql.execDirect',
+		data  : count_query
+	}
+	
+	try{
+		let records = await store.runAction(currentSession, p);
+		let z = records.items('results', 'Result Set').toJS().rows[0][0];
+		let foo = 0;
+	}catch(err){
+		handleError(err);
+		return null;
+	}
+
 		console.log("getAvailableProcess");
 	query={'query': 'select * from ' + getSelectedCaslib() + '.PROCESS'};
 	let payload = {
@@ -570,9 +587,7 @@ async function getAvailableProcess(){
 	try{
 		let records = await store.runAction(currentSession, payload).then(r=> {
 			console.log("ran action");
-			setColumnData(r.items('results', 'Fetch').toJS().schema);
-		setTableRows(r.items('results', 'Fetch').toJS().rows);
-		drawTable();
+
 			tableInfo = r.items("results", "TableInfo");
 			cleanupSelector('process_select');
 			console.log(tableInfo);
