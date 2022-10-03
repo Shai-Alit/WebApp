@@ -481,7 +481,7 @@ function loadTableData(startRow, endRow){
 
 async function f_loadTableData(table, fetchvars){
 	
-	query={'query': 'select PROCESS from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'HZ01SULF\''};
+	query={'query': 'select PROCESS, BATCH, STOP,TYPE,LOT from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'' + getSelectedProcess() +'\''};
 	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
@@ -489,13 +489,18 @@ async function f_loadTableData(table, fetchvars){
 
 	let records = await store.runAction(currentSession, payload);
 	let z = records.items('results', 'Result Set').toJS().rows;
+	let entries = z.length;
 
-	store.runAction(currentSession, payload).then ( r => {
-		setColumnData(r.items('results', 'Fetch').toJS().schema);
-		setTableRows(r.items('results', 'Fetch').toJS().rows);
-		drawTable();
-		setPageNavigationInfo(startRow, endRow);
-	}).catch(err => handleError(err))
+	query={'query': 'select MIN(START) as begin_date, MAX(STOP) as end_date from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'' + getSelectedProcess() +'\''};
+	let p = {
+		action: 'fedSql.execDirect',
+		data  : query
+	}
+
+	let records2 = await store.runAction(currentSession, payload);
+	let z2 = records2.items('results', 'Result Set').toJS().rows;
+
+	entries_textbox.value = entries;
 	
 }
 
