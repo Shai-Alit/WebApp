@@ -121,7 +121,7 @@ async function f_initNewTable(){
 
 		current_row = 1;
 		
-		f_loadTableData("FLDATTR","");
+		f_loadTableData("active_mod","");
 		$('#button_bar_div').show();
 	
 	
@@ -481,7 +481,7 @@ function loadTableData(startRow, endRow){
 
 async function f_loadTableData(table, fetchvars){
 	
-	query={'query': 'select PROCESS,BATCH,MODDATE,TYPE,LOT from ' + getSelectedCaslib() + '.' + table + ' where PROCESS="' + getSelectedProcess() + '"'};
+	query={'query': 'select PROCESS, BATCH, START, TYPE, LOT from ' + getSelectedCaslib() + '.' + table + ' PROCESS="HA01SULF"'};
 	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
