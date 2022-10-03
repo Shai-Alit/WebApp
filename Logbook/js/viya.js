@@ -487,7 +487,7 @@ async function f_loadTableData(table, fetchvars){
 		data  : query
 	}
 
-	let records = await store.runAction(currentSession, p);
+	let records = await store.runAction(currentSession, payload);
 	let z = records.items('results', 'Result Set').toJS().rows;
 
 	store.runAction(currentSession, payload).then ( r => {
