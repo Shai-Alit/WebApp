@@ -121,8 +121,6 @@ async function f_initNewTable(){
 
 		current_row = 1;
 		
-		table_schema = await f_getColumnDetails("FLDATTR");
-		total_rows = await getTotalRows();
 		f_loadTableData("FLDATTR","");
 		$('#button_bar_div').show();
 	
