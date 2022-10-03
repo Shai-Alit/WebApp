@@ -481,7 +481,7 @@ function loadTableData(startRow, endRow){
 
 async function f_loadTableData(table, fetchvars){
 	
-	query={'query': 'select PROCESS, BATCH, START, TYPE, LOT from ' + getSelectedCaslib() + '.' + table};
+	query={'query': 'select distinct PROCESS from ' + getSelectedCaslib() + '.' + 'PROCESS'};
 	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
