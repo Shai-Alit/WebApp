@@ -115,15 +115,15 @@ async function initNewTable(){
 	
 }
 
-async function f_initNewTable(caslib,table){
+async function f_initNewTable(){
 	
 	//reset the row and filter for a new table selection
 
 		current_row = 1;
 		
-		table_schema = await f_getColumnDetails();
-		total_rows = await f_getTotalRows();
-		f_loadTableData(current_row, page_rows);
+		table_schema = await f_getColumnDetails("FLDATTR");
+		total_rows = await getTotalRows();
+		f_loadTableData("FLDATTR","");
 		$('#button_bar_div').show();
 	
 	
@@ -451,8 +451,6 @@ function f_drawTable(table){
 		for(var j=0; j < row.length; j++){
 			if(j === 0){
 				html += '<td nowrap scope="row">';
-				html += '<button type="button" class="btn btn-secondary" onclick="editTableRow(' + row[j] + ');">Edit</button>&nbsp;';
-				html += '<button type="button" class="btn btn-danger" onclick="deleteTableRow(' + row[j] + ');">Delete</button>';
 				html += '</td>';
 			}else
 				html += '<td scope="row">' + row[j] + '</td>';
@@ -483,21 +481,30 @@ function loadTableData(startRow, endRow){
 	
 }
 
-function f_loadTableData(table, caslib, fetchvars, startRow, endRow){
+async function f_loadTableData(table, fetchvars){
 	
 	if (fetchvars === ""){
 		let payload = {
 			action: 'table.fetch',
-			data  : {'table': { 'name': table, 'caslib': caslib}, 'from':startRow, 'to': endRow}
+			data  : {'table': { 'name': table, 'caslib': getSelectedCaslib()}, 'from':startRow, 'to': endRow}
 		}
 	}
 	else 
 	{
 		let payload = {
 			action: 'table.fetch',
-			data  : {'table': { 'name': table, 'caslib': caslib},'fetchVars':fetchvars, 'from':startRow, 'to': endRow}
+			data  : {'table': { 'name': table, 'caslib': getSelectedCaslib()},'fetchVars':fetchvars, 'from':startRow, 'to': endRow}
 		}
 	}
+
+	query={'query': 'select PROCESS,BATCH,MODDATE,TYPE,LOT from ' + getSelectedCaslib() + '.' + table + ' where PROCESS="' + getSelectedProcess() + '"'};
+	let payload = {
+		action: 'fedSql.execDirect',
+		data  : query
+	}
+
+	let records = await store.runAction(currentSession, p);
+	let z = records.items('results', 'Result Set').toJS().rows;
 
 	store.runAction(currentSession, payload).then ( r => {
 		setColumnData(r.items('results', 'Fetch').toJS().schema);
@@ -602,7 +609,7 @@ async function f_getColumnDetails(table){
 
 	let payload = {
 		action: 'table.columnInfo',
-		data  : {'table': { 'name': getSelectedTable(), 'caslib': table, 'computedOnDemand':true}}
+		data  : {'table': { 'name': table, 'caslib': getSelectedCaslib(), 'computedOnDemand':true}}
 	}
 
 	try{
@@ -648,6 +655,10 @@ function getColumnData(){
 
 function getSelectedCaslib(){
 	return $('#caslib_select').val();
+}
+
+function getSelectedProcess(){
+	return $('#process_select').val();
 }
 
 function getSelectedTable(){
