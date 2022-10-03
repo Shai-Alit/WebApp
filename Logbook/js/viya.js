@@ -708,14 +708,14 @@ function handleError(err){
 
 }
 
-function runSASCode(){
+async function runSASCode(){
 
 	console.log(getSelectedCaslib());
 	$("#status_message").empty().append(getSelectedCaslib());
 
 	var code = 'data active (keep=Make Model MSRP EngineSize);';
 	code += 'set seford_s.cars;';
-	code += 'where Make="Acura";';
+	code += 'where Make=\'Acura\';';
 	code += 'run;';
 
 	let payload = {
@@ -723,9 +723,8 @@ function runSASCode(){
 		data  : {'code': code, 'single': 'yes'}
 	}
 
-	store.runAction(currentSession, payload).then (r => {
-		console.log(r);
-	}).catch(err => handleError(err))
+	let repsonse = await store.runAction(currentSession, payload);
+	let foo = 0;
 
 	
 }

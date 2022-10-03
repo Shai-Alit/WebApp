@@ -139,3 +139,23 @@ function loadTableData(){
     console.log("pause");
 	
 }
+
+async function runSASCode(){
+
+	let computeSession = await computeSetup(store, null);
+    let macros={"make": 'Acura'};
+    var code = 'filename mdlfldr filesrvc folderpath= "/Public/Shared/Sean Ford";';
+    code += '%include mdlfldr("sql_macro.sas");';
+    code += '%carmake(make = ' + '\'Acura\'' + ');';
+
+    let computeSummary = await computeRun(
+        store,
+        computeSession,
+        code,
+        macros
+    );
+
+    let z = computSummary.items('results').toJS();
+    let foo = 0;
+	
+}
