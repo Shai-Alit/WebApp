@@ -142,7 +142,7 @@ function loadTableData(){
 async function runSASCode(){
 
     let {computeSetup, computeRun} = restaflib;
-	let computeSession = await computeSetup(store, null);
+	//let computeSession = await computeSetup(store, null);
     let macros={"make": 'Acura'};
     var code = 'filename mdlfldr filesrvc folderpath= "/Public/Shared/Sean Ford";';
     code += '%include mdlfldr("sql_macro.sas");';
