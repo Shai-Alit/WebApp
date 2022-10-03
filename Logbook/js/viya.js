@@ -610,9 +610,12 @@ async function f_getColumnDetails(table,filtervars){
 	try{
 		let tableDetail = await store.runAction(currentSession, payload);
 		let rows = tableDetail.items('results', 'ColumnInfo').toJS().rows;
-		let fiter_rows;
+		let fiter_rows = [];
 		for(var i=0; i<rows.length; i++){
-			filter_rows.append(rows[i]);
+			if (filtervars.includes(rows[i][0] ))
+			{
+				filter_rows.push(rows[i])
+			};
 		}
 		return filter_rows;
 	}catch(err){
