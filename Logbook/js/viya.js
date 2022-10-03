@@ -497,7 +497,7 @@ async function f_loadTableData(table, fetchvars){
 }
 
 async function getBeginEnd(table){
-	query={'query': 'select put(MIN(STARTDATETIME),datetime.) as begin_time, MAX(STOP) as end_time from ' + getSelectedCaslib() + '.' + table + ' where PROCESS=\'' + getSelectedProcess() +'\''};
+	query={'query': 'select put(MIN(STARTDATETIME),datetime.) as begin_time, put(MAX(STOP),datetime.) as end_time from ' + getSelectedCaslib() + '.' + table + ' where PROCESS=\'' + getSelectedProcess() +'\''};
 	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
@@ -505,6 +505,9 @@ async function getBeginEnd(table){
 
 	let records = await store.runAction(currentSession, payload);
 	let z = records.items('results', 'Result Set').toJS().rows;
+
+	begin_time_textbox.value = z[0][0];
+	end_time_textbox.value = z[0][1];
 }
 
 function drowdown1Function() {
