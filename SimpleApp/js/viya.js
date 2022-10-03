@@ -28,7 +28,7 @@ async function appInit(){
     try {
         let msg = await store.logon(p);
         
-        let {compute} = await store.addServices( 'compute', );
+        let {compute} = await store.addServices('compute' );
         let servers = await store.apiCall(compute.links('servers'));
 
         let serverName = servers.itemsList(0);
