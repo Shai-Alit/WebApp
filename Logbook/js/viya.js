@@ -570,7 +570,7 @@ async function getAvailableProcess(){
 	
 	try{
 		let records = await store.runAction(currentSession, p);
-		let z = records.items('results', 'Result Set').toJS().rows[0][0];
+		let z = records.items('results', 'Result Set').toJS().rows;
 		let foo = 0;
 	}catch(err){
 		handleError(err);
