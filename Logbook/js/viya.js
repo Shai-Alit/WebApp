@@ -497,7 +497,7 @@ async function f_loadTableData(table, fetchvars){
 }
 
 async function getBeginEnd(table){
-	query={'query': 'select (MIN(STARTDATETIME),datetime.) as begin_time, MAX(STOP) as end_time from ' + getSelectedCaslib() + '.' + table + ' where PROCESS=\'' + getSelectedProcess() +'\''};
+	query={'query': 'select put(MIN(STARTDATETIME),datetime.) as begin_time, MAX(STOP) as end_time from ' + getSelectedCaslib() + '.' + table + ' where PROCESS=\'' + getSelectedProcess() +'\''};
 	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
