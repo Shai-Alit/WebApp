@@ -120,7 +120,7 @@ async function f_initNewTable(){
 	//reset the row and filter for a new table selection
 
 		current_row = 1;
-		
+		table_schema = await f_getColumnDetails("active_mode",["PROCESS", "BATCH", "STOP","TYPE","LOT"]);
 		f_loadTableData("active_mod","");
 		$('#button_bar_div').show();
 	
@@ -599,7 +599,8 @@ async function getColumnDetails(){
 	
 }
 
-async function f_getColumnDetails(table){
+
+async function f_getColumnDetails(table,filtervars){
 
 	let payload = {
 		action: 'table.columnInfo',
@@ -608,7 +609,12 @@ async function f_getColumnDetails(table){
 
 	try{
 		let tableDetail = await store.runAction(currentSession, payload);
-		return tableDetail.items('results', 'ColumnInfo').toJS().rows;
+		let rows = tableDetail.items('results', 'ColumnInfo').toJS().rows;
+		let fiter_rows;
+		for(var i=0; i<rows.length; i++){
+			filter_rows.append(rows[i]);
+		}
+		return filter_rows;
 	}catch(err){
 		handleError(err);
 		return null;
