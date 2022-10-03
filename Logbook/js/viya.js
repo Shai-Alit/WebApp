@@ -491,19 +491,21 @@ async function f_loadTableData(table, fetchvars){
 	let z = records.items('results', 'Result Set').toJS().rows;
 	let entries = z.length;
 
-	query={'query': 'select START STOP from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'' + getSelectedProcess() +'\' order by START'};
-	payload = {
+	entries_textbox.value = entries;
+	
+	loadInputBoxes();
+}
+
+async function loadInputBoxes(){
+	query={'query': 'select START, STOP from ' + getSelectedCaslib() + '.' + 'ACTIVE_MOD where PROCESS=\'' + getSelectedProcess() +'\' order by START'};
+	let payload = {
 		action: 'fedSql.execDirect',
 		data  : query
 	}
 
 	let records2 = await store.runAction(currentSession, payload);
 	let z2 = records2.items('results', 'Result Set').toJS().rows;
-
-	entries_textbox.value = entries;
-	
 }
-
 
 function drowdown1Function() {
 
