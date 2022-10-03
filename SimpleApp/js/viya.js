@@ -29,11 +29,7 @@ async function appInit(){
         let msg = await store.logon(p);
         
         let {compute} = await store.addServices( 'compute', );
-        let {casManagement} = await store.addServices ('casManagement');
-        let servers = await store.apiCall(casManagement.links('servers'));
-        let contexts = await store.apiCall( compute.links( 'contexts' ) );
-        let context0 = contexts.itemsList( 0 );
-        session      = await store.apiCall( contexts.itemsCmd( context0, 'createSession') )
+        let servers = await store.apiCall(compute.links('servers'));
 
         let serverName = servers.itemsList(0);
         let server_session = await store.apiCall(servers.itemsCmd(serverName, 'createSession'));
@@ -41,7 +37,7 @@ async function appInit(){
         let { identities } = await store.addServices('identities');
         let c = await store.apiCall(identities.links('currentUser'));
         logged_user = c.items('id');
-        currentSession = session;
+        currentSession = server_session;
         
     }
     catch (err) {
@@ -150,7 +146,7 @@ async function runSASCode(){
 
     let computeSummary = await computeRun(
         store,
-        computeSession,
+        currentSession,
         code,
         macros
     );
