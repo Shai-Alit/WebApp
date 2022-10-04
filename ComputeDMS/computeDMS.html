@@ -77,8 +77,6 @@
     <script type="text/javascript" src="https://unpkg.com/@sassoftware/restafuilib@prod/dist/restafuilib.js"></script>
     <script type="text/javascript" src="shared/showAlert.js"></script>
     <script type="text/javascript" src="shared/util.js"></script>
-    <script src="https://unpkg.com/restaf-uicomponents@prod/dist/restaf-uicomponents.js"></script>
-
 
 </head>
     <body>
@@ -103,32 +101,17 @@
                 let contexts = await store.apiCall( compute.links( 'contexts' ) );
                 let context0 = contexts.itemsList( 0 );
                 session      = await store.apiCall( contexts.itemsCmd( context0, 'createSession') )
-                document.getElementById( 'results' ).style.visibility = 'hidden';
-                editor();
             }
             catch( err ) {
                 showAlert( err );
             }
         }
 
-        function editor ( ) {
-            ;
-            let props = {
-                onRun: runCode,
-                text  : ' ',
-                mode  : 'text',
-                msg   : 'You are now at the Famous 1? -- Enter your SAS code below',
-                upload: false,
-                button: 'RUN'
-            };
-            document.getElementById( 'SASContent' ).textContent = 'ready';
-            rafuip.TextEditor( props, "#sourcediv" );
 
-        }
-
-       function runCode ( text, uploadF, cb ) {
+       function runCode ( text) {
            ;
-           let code    = text.split(/\r?\n/);
+           //let code    = text.split(/\r?\n/);
+           let code = text;
            let payload = { data: { code: code } };
 
            // Get the folder to execute
@@ -143,7 +126,6 @@
                     if (status.data !== 'running') {
                         document.getElementById( 'results' ).style.visibility = 'visible';
                         showAllContent( status.job );
-                        cb( true );
                     } else {
                         throw { Error: `job did not complete:  ${status.jobState.data}` };
                     }
@@ -152,38 +134,22 @@
               .catch( err => {
                   console.log( err );
                   showAlert( err );
-                  cb( false )
               } )
        }
 
-        function showAllContent( job ) {
-            onClickLog     = logViewer.bind(null, store, job, 'log');
-            onClickListing = logViewer.bind(null, store, job, 'listing');
-            onClickODS     = odsViewer.bind(null, store, job, 'ods');
-            onClickLog();
-        }
-
         setupDMS();
+
+        async function runSASCode(){
+            var code = 'filename mdlfldr filesrvc folderpath= "/Public/Shared/Sean Ford";';
+            macros={'make':'Acura'}
+            code += '%include mdlfldr("sql_macro.sas");';
+            code += '%carmake(make = ' + "Acura" + ');';
+
+            runCode(code);
+        }
     </script>
 
 <h1> restAF at Work - Simple DMS Example </h1>
-    <div id="container">
-        <div id="sourcediv" class="rafuip-main-content">
-         <p> Code here </p>
-        </div>
-    </div>
-<br>
-<div id="results" class="rafuip-main-content">
-    <ul>
-        <li>  <button  id='log' onclick="onClickLog()" > Log </button></li>
-        <li>  <button  id='listing' onclick="onClickListing()" > Listing </button></li>
-        <li>  <button  id='ods' onclick="onClickODS()" > Ods </button></li>
-
-    </ul>
-    <div id="SASContent">
-        <p> Your output will appear here </p>
-     </div>
-
-</div>
+<button onclick="runSASCode()">Test click</button>
 </body>
 </html>
