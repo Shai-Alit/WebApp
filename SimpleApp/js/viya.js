@@ -5,8 +5,6 @@ var server_session;
 var serverName;
 var viyahost = window.location.origin;
 var logged_user;
-var computeSetup;
-var computeRun;
 var computeSession;
 var computeContext;
 
