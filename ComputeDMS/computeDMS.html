@@ -116,15 +116,11 @@
 
            // Get the folder to execute
            let executeCmd = session.links( 'execute' );
-
-           // Submit the program to SAS
-           document.getElementById( 'results' ).style.visibility = 'hidden';
            ;
            store.apiCall( executeCmd, payload )
               .then( job => store.jobState( job , { qs: { timeout: 2 } }, 10 ) )
                 .then ( status  => {
                     if (status.data !== 'running') {
-                        document.getElementById( 'results' ).style.visibility = 'visible';
                         showAllContent( status.job );
                     } else {
                         throw { Error: `job did not complete:  ${status.jobState.data}` };
