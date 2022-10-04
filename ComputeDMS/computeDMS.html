@@ -135,6 +135,12 @@
 
         setupDMS();
 
+        function showAllContent( job ) {
+            onClickLog     = logViewer.bind(null, store, job, 'log');
+            onClickListing = logViewer.bind(null, store, job, 'listing');
+            onClickODS     = odsViewer.bind(null, store, job, 'ods');
+        }
+
         async function runSASCode(){
             var code = 'filename mdlfldr filesrvc folderpath= "/Public/Shared/Sean Ford";';
             macros={'make':'Acura'}
