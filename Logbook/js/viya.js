@@ -761,7 +761,7 @@ async function runSASCode_basic(){
 
 async function runSASCode(){
 	let code = gen_init_code(code_fpath, 'compute_process_data.sas');
-	code += '%compute_process_data(process= "' + getSelectedProcess() + '");';
+	code += '%compute_process_data(process=' + getSelectedProcess() + ');';
 
 	runCode(code);
 }
