@@ -7,6 +7,7 @@
 **/
 
 var currentSession;
+var computeSession = null;
 var viyahost = window.location.origin;
 var logged_user;
 
@@ -39,7 +40,7 @@ async function appInit(){
 	let {compute} = await store.addServices( 'compute' );
 	let contexts = await store.apiCall( compute.links( 'contexts' ) );
 	let context0 = contexts.itemsList( 0 );
-	let computeSession      = await store.apiCall( contexts.itemsCmd( context0, 'createSession') )
+	computeSession      = await store.apiCall( contexts.itemsCmd( context0, 'createSession') )
 	
 	let { identities } = await store.addServices('identities');
     let c = await store.apiCall(identities.links('currentUser'));
