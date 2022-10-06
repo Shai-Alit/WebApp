@@ -57,10 +57,10 @@ async function appInit(){
 *
 **/
 function initDataEditor(){
-	$("#user_info").empty().append("user " + logged_user + " on dev env " + viyahost);
-	getCaslibs();
-
-
+	appInit().then ( session => {
+		currentSession = session;
+		getCaslibs();
+	}).catch( err => handleError(err));
 }
 
 /**
