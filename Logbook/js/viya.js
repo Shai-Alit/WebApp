@@ -20,6 +20,8 @@ var column_data = [];
 var table_rows = [];
 var table_filter = '';
 
+var code_fpath = '/Public/Shared/Sean Ford';
+
 /**
 *
 *	Initialize the connection to the Viya backend. Leverages the authentication from the browser.
@@ -738,11 +740,28 @@ function runCode ( text) {
 	   } )
 }
 
-async function runSASCode(){
+/*
+* code_fpath - path where code resides on server. ex /Public/Shared/Sean Ford
+* code_fname - filename of sas code. ex sql_macro.sas
+*/
+function gen_init_code(code_fpath,code_fname){
+	let code = 'filename mdlfldr filesrvc folderpath= "' + code_fpath + '";';
+	code += '%include mdlfldr("' + code_fname + '");';
+	return code;
+}
+
+async function runSASCode_basic(){
 	var code = 'filename mdlfldr filesrvc folderpath= "/Public/Shared/Sean Ford";';
 	macros={'make':'Acura'}
 	code += '%include mdlfldr("sql_macro.sas");';
 	code += '%carmake(make = ' + "Acura" + ');';
+
+	runCode(code);
+}
+
+async function runSASCode(){
+	let code = gen_init_code(code_fpath, 'compute_process_data.sas');
+	code += '%compute_process_data(process= "' + getSelectedProcess() + '");';
 
 	runCode(code);
 }
