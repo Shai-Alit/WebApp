@@ -35,6 +35,11 @@ async function appInit(){
     let servers = await store.apiCall(casManagement.links('servers'));
     let serverName = servers.itemsList(0);
     let session = await store.apiCall(servers.itemsCmd(serverName, 'createSession'));
+
+	let {compute} = await store.addServices( 'compute' );
+	let contexts = await store.apiCall( compute.links( 'contexts' ) );
+	let context0 = contexts.itemsList( 0 );
+	let computeSession      = await store.apiCall( contexts.itemsCmd( context0, 'createSession') )
 	
 	let { identities } = await store.addServices('identities');
     let c = await store.apiCall(identities.links('currentUser'));
@@ -707,24 +712,36 @@ function handleError(err){
 	console.error(err);
 
 }
+function runCode ( text) {
+	;
+	//let code    = text.split(/\r?\n/);
+	let code = text;
+	let payload = { data: { code: code } };
+
+	// Get the folder to execute
+	let executeCmd = computeSession.links( 'execute' );
+	;
+	store.apiCall( executeCmd, payload )
+	   .then( job => store.jobState( job , { qs: { timeout: 2 } }, 10 ) )
+		 .then ( status  => {
+			 if (status.data !== 'running') {
+				 showAllContent( status.job );
+			 } else {
+				 throw { Error: `job did not complete:  ${status.jobState.data}` };
+			 }
+		 } )
+	   // catch errors
+	   .catch( err => {
+		   console.log( err );
+		   showAlert( err );
+	   } )
+}
 
 async function runSASCode(){
+	var code = 'filename mdlfldr filesrvc folderpath= "/Public/Shared/Sean Ford";';
+	macros={'make':'Acura'}
+	code += '%include mdlfldr("sql_macro.sas");';
+	code += '%carmake(make = ' + "Acura" + ');';
 
-	console.log(getSelectedCaslib());
-	$("#status_message").empty().append(getSelectedCaslib());
-
-	var code = 'data active (keep=Make Model MSRP EngineSize);';
-	code += 'set seford_s.cars;';
-	code += 'where Make=\'Acura\';';
-	code += 'run;';
-
-	let payload = {
-		action: 'datastep.runCode',
-		data  : {'code': code, 'single': 'yes'}
-	}
-
-	let repsonse = await store.runAction(currentSession, payload);
-	let foo = 0;
-
-	
+	runCode(code);
 }
