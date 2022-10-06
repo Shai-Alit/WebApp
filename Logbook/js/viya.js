@@ -6,7 +6,7 @@
 *
 **/
 
-var currentSession;
+var currentSession = null;
 var computeSession = null;
 var viyahost = window.location.origin;
 var logged_user;
@@ -58,7 +58,6 @@ async function appInit(){
 **/
 function initDataEditor(){
 	$("#user_info").empty().append("user " + logged_user + " on dev env " + viyahost);
-	currentSession = session;
 	getCaslibs();
 
 
