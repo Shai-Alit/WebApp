@@ -58,6 +58,7 @@ async function appInit(){
 **/
 function initDataEditor(){
 	$("#user_info").empty().append("user " + logged_user + " on dev env " + viyahost);
+	currentSession = session;
 	getCaslibs();
 
 
