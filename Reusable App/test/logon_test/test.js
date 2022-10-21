@@ -15,6 +15,7 @@ function run_test(){
 			}
 			else{
 				logged_user = rv;
+				console.log(rv);
 			}
 			});
 		setStatusMessage(msg + ' - user ID=' + logged_user,'info');
