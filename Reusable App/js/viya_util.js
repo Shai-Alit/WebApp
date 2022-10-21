@@ -35,4 +35,22 @@ async function addComputeService(){
 	let context0 = contexts.itemsList( 0 );
 	let session      = await store.apiCall( contexts.itemsCmd( context0, 'createSession') )
 	return session;
+
+}
+
+function getCaslibs(session){
+
+	caslibs = null;
+	caslib_details={'mdType': 'CASLIBS'};
+	let caslibPayload = {
+		action: 'accessControl.listMetadata',
+		data  : caslib_details
+	}
+
+	store.runAction(session, caslibPayload).then ( r => {
+		caslibs = r.items("results", "Metadata").toJS().rows;
+	}).catch(err => handleError(err))
+	
+	return caslibs;
+	
 }
