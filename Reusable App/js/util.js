@@ -43,5 +43,4 @@ function handleError(err){
 
     setStatusMessage('ERROR','danger');
 	console.error(err);
-
 }
