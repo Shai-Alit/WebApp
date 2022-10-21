@@ -17,8 +17,8 @@ function run_test(){
 				logged_user = rv;
 				console.log(rv);
 			}
+			setStatusMessage(msg + ' - user ID=' + logged_user,'info');
 			});
-		setStatusMessage(msg + ' - user ID=' + logged_user,'info');
 	}).catch( err => handleError(err));
     
 }
