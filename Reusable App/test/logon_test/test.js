@@ -25,7 +25,7 @@ async function logonServer(viyahost){
 }
 
 async function getUserIdentity(){
-	logged_user = 'None';
+	let logged_user = 'None';
 	try {
 	let { identities } = await store.addServices('identities');
     let c = await store.apiCall(identities.links('currentUser'));
