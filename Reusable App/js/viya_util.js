@@ -19,3 +19,20 @@ async function getUserIdentity(){
 	}
 	return logged_user;
 }
+
+
+async function addCASService(){
+	let {casManagement} = await store.addServices ('casManagement');
+    let servers = await store.apiCall(casManagement.links('servers'));
+    let serverName = servers.itemsList(0);
+    let session = await store.apiCall(servers.itemsCmd(serverName, 'createSession'));
+	return session;
+}
+
+async function addComputeService(){
+	let {compute} = await store.addServices( 'compute' );
+	let contexts = await store.apiCall( compute.links( 'contexts' ) );
+	let context0 = contexts.itemsList( 0 );
+	let session      = await store.apiCall( contexts.itemsCmd( context0, 'createSession') )
+	return session;
+}
