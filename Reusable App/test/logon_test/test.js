@@ -30,6 +30,7 @@ async function getUserIdentity(){
 	let { identities } = await store.addServices('identities');
     let c = await store.apiCall(identities.links('currentUser'));
 	logged_user = c.items('id');
+	console.log(logged_user);
 	}
 	catch(err) {
 		handleError(err);
