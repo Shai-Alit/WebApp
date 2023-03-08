@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heatmap Example</title>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"
+    ></script>
+  </head>
+  <body>
+    <div style="display:inline-block; float:left" id="container"></div>
+    <script src="main.js"></script>
+    <script>
+      Matrix({
+        container: "#container",
+        start_color: "#FC7C89",
+        end_color: "#21A38B",
+      });
+    </script>
+  </body>
+</html>
