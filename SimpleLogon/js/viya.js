@@ -22,8 +22,8 @@ async function appInit(){
 
     let  payload = {
         authType    : 'token',
-        host        : 'http://eeclxvm067.exnet.sas.com',
-        token : 'eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vbG9jYWxob3N0L1NBU0xvZ29uL3Rva2VuX2tleXMiLCJraWQiOiJsZWdhY3ktdG9rZW4ta2V5IiwidHlwIjoiSldUIn0.eyJqdGkiOiIyNzY2NDlhMzMzNWE0YWM5YTdjODY3MzY3MWM1ZmU2YSIsImV4dF9pZCI6InVpZD1zZWZvcmQsb3U9dXNlcnMsZGM9YnVkcyxkYz1jb20iLCJyZW1vdGVfaXAiOiIxNzIuMTYuNDcuMiIsInN1YiI6IjU1YmE0OTU0LWE1NzYtNGM2NS1hMTBmLTJhYzYwOTc2ZDlmNSIsInNjb3BlIjpbIm9wZW5pZCJdLCJjbGllbnRfaWQiOiJteWNsaWVudGlkIiwiY2lkIjoibXljbGllbnRpZCIsImF6cCI6Im15Y2xpZW50aWQiLCJncmFudF90eXBlIjoiYXV0aG9yaXphdGlvbl9jb2RlIiwidXNlcl9pZCI6IjU1YmE0OTU0LWE1NzYtNGM2NS1hMTBmLTJhYzYwOTc2ZDlmNSIsIm9yaWdpbiI6ImxkYXAiLCJ1c2VyX25hbWUiOiJzZWZvcmQiLCJlbWFpbCI6InNlZm9yZEBlZWNseHZtMDY4LmV4bmV0LnNhcy5jb20iLCJhdXRoX3RpbWUiOjE2NTQyODQ1MjMsInJldl9zaWciOiI1M2UzNTVhOSIsImlhdCI6MTY1NDI4NDUyMywiZXhwIjoxOTY5NjQ0NTIzLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0L1NBU0xvZ29uL29hdXRoL3Rva2VuIiwiemlkIjoidWFhIiwiYXVkIjpbIm15Y2xpZW50aWQiLCJvcGVuaWQiXX0.JIan6E9P5YSoKXg7uTMvGbrifYmZ5330KSsKu7MV2aQIJDvu4dnCMS1ycxUmMx2KtCVjZGIDb5eJDeEqpo6rHiHr5o309zRjToGPOgrpH5sKEFpNMx5x88WWtZmfgdvAwQsSf-h6RHzYwJdp3JPEGU9_COis25GKyXdZvoc58emmj3K7ep8UidxpGCLeOvZK7IKrcIpYDfU9qdxcUJPZq_25fl18dy_aErSEfvgUv7DUiBItHz-Z9Oe3OrRA8pEEheZtQZhj-5_2u6_l3YjI-gDdim5AhsVSPJ8BlrHh0mEJKDtlQ-WOAc_x-ZVv2M40wIibMaRBEGeLxTbenVddfg'
+        host        : 'http://budsprod.viyamtes.com',
+        token : 'eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vbG9jYWxob3N0L1NBU0xvZ29uL3Rva2VuX2tleXMiLCJraWQiOiJsZWdhY3ktdG9rZW4ta2V5IiwidHlwIjoiSldUIn0.eyJqdGkiOiJkZmFkYjMxOGE3MGQ0YmRjOWRmZjVjNzFmYzAzYjc5YyIsImV4dF9pZCI6InVpZD1zZWZvcmQsb3U9cGVvcGxlLGRjPWV4YW1wbGUsZGM9Y29tIiwicmVtb3RlX2lwIjoiMTQ5LjE3My44LjExMyIsInNlc3Npb25fc2lnIjoiMGUzMjlmNWMtYmYzZi00ZDMxLTlmNDctOTA3ZDBmM2M2MGJjIiwic3ViIjoiYTliMTM5MzYtZWZkZS00OWU4LWE4M2MtN2ZlMzI2MmU3OWRlIiwic2NvcGUiOlsib3BlbmlkIl0sImNsaWVudF9pZCI6ImJ1ZHNwcm9kY2xpZW50aWQiLCJjaWQiOiJidWRzcHJvZGNsaWVudGlkIiwiYXpwIjoiYnVkc3Byb2RjbGllbnRpZCIsImdyYW50X3R5cGUiOiJhdXRob3JpemF0aW9uX2NvZGUiLCJ1c2VyX2lkIjoiYTliMTM5MzYtZWZkZS00OWU4LWE4M2MtN2ZlMzI2MmU3OWRlIiwib3JpZ2luIjoibGRhcCIsInVzZXJfbmFtZSI6InNlZm9yZCIsImVtYWlsIjoiU2Vhbi5Gb3JkQHNhcy5jb20iLCJhdXRoX3RpbWUiOjE2NzU3ODQwNTYsInJldl9zaWciOiJlM2YzYmQ4MiIsImlhdCI6MTY3NTc4NDA1NiwiZXhwIjoyMTQ4ODI0MDU2LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0L1NBU0xvZ29uL29hdXRoL3Rva2VuIiwiemlkIjoidWFhIiwiYXVkIjpbIm9wZW5pZCIsImJ1ZHNwcm9kY2xpZW50aWQiXX0.cuZDLcioah7YNjIyff9JG6KX0IEXHOIcqlIBX3CdZYtdFQfzrqF7Et_INt46uRwEOwb57WrlfFoGSP0cImzKm8gV0BSKdnwqbbmkZF4OjEey8n8hy9dYOJQLXoavZWrwXUiqD3_o1F9C99lS2ixkleg_zW9ZGHmYTCAKuh1GUV9wE8HaBuKRIU299_rqui3gB8Pl5xQWm_i1VAAJaU7XwQl2gA0B_U1G2sC8YiiA9WduGkAf4zp36n00t2cf_f8CdPVyu1PeHUj_4i1JNED1wiN89vr8wowC5Zq9YprPO5sbIYpeAZlAOyAnxir_kcde-sAWMUKseYr6B_9eoFKX3g'
         };
 
         let msg = await store.logon(payload);
@@ -36,7 +36,7 @@ async function appInit(){
 async function appInit2() {
     let  payload = {
         authType    : 'password',
-        host        : 'https://eeclxvm067.exnet.sas.com',
+        host        : 'https://budsprod.viyamtes.com',
         user        : 'seford',
         password    : 'Demopw123',
         clientID    : 'myclientid',  /* get this from your admin */
@@ -51,11 +51,23 @@ async function appInit2() {
 
 }
 
+async function appInit3() {
+    let p = {
+        authType: 'server',
+        host: viyahost
+      }
+      let msg = await store.logon(p);
+      let { identities } = await store.addServices('identities');
+    let c = await store.apiCall(identities.links('currentUser'));
+	logged_user = c.items('id');
+    console.log(logged_user);
+}
+
 function uiInit(){
 
-    appInit2().then ( c => {
+    appInit3().then ( c => {
         console.log(c);
-    }).catch( err => handleError(err));
+    }).catch( err => console.log(err));
 
     console.log("pause");
 }

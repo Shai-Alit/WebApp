@@ -4,25 +4,75 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Heatmap Example</title>
-    <link rel="stylesheet" type="text/css" href="main.css" />
+    
+
+    <script src="https://unpkg.com/@sassoftware/restaf@next/dist/restaf.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://unpkg.com/@sassoftware/restaflib@4.0.1/dist/restaflib.min.js"></script>
+
+    <script src="main.js"></script>
+
+    <script>
+        let store = restaf.initStore({casProxy: true});
+    </script>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap"
       rel="stylesheet"
     />
     <script
       type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"
+      src="https://d3js.org/d3.v6.js"
     ></script>
   </head>
-  <body>
-    <div style="display:inline-block; float:left" id="container"></div>
-    <script src="main.js"></script>
-    <script>
-      Matrix({
-        container: "#container",
-        start_color: "#FC7C89",
-        end_color: "#21A38B",
-      });
-    </script>
+
+  <body onload="init();">
+    <div class="row">
+        <div id="user_info" class="col-sm-12">
+    
+        </div>
+    </div>
+    
+    <div class="container-fluid" id="container">
+        
+    
+        <div class="row">
+            <div class="col-sm-12">
+                
+                <div class="form-row">
+                    <label for="failure_filter">Filter by Failure Type</label>
+                    <div class="col-md-3">
+                        <select class="form-control" required onchange="failureTypeDropdownFunction();" id="failureTypeDropdown" name="failureTypeDropdown">
+                            <option value="-all-">-all-</option>
+                        </select>
+                    </div>
+
+                    <label for="lot_filter">Filter by Lot</label>
+                    <div class="col-md-3">
+                        <select class="form-control" required onchange="lotDropdownFunction();" id="lotDropdown" name="lotDropdown">
+                        </select>
+                    </div>
+
+                    <label for="wafer_filter">Select a Wafer</label>
+                    <div class="col-md-3">
+                        <select class="form-control" required onchange="waferDropdownFunction();" id="waferDropdown" name="waferDropdown">
+                        </select>
+                    </div>
+                    <br>
+
+                    <button onclick="displayWaferHeatmap()" id="display_wafer_heatmap" disabled>Examine Wafer</button>
+                    <div id="my_dataviz"></div>
+                </div>
+            </div>
+        </div>
+    
+    
+       
+    </div>
+
   </body>
 </html>
+
+
