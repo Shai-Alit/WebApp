@@ -5,19 +5,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Home - Brand</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href="assets/css/vanilla-zoom.min.css">
+    <!link rel="stylesheet" href="assets/css/vanilla-zoom.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    <script src="https://mtes00tt00storage3.file.core.windows.net/mtes-tt-file-share/data/P_FORD/IndustrialApp/assets/js/bs-init.js?sv=2023-01-03&ss=btqf&srt=sco&st=2024-03-29T00%3A54%3A49Z&se=2025-04-30T00%3A54%3A00Z&sp=rl&sig=l7xZMHXKqdJMXZNn5QC6Pv4vejkRtccAnAviWp0zunM%3D"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
+    <script src="https://mtes00tt00storage3.file.core.windows.net/mtes-tt-file-share/data/P_FORD/IndustrialApp/assets/js/theme.js?sv=2023-01-03&ss=btqf&srt=sco&st=2024-03-29T00%3A54%3A49Z&se=2025-04-30T00%3A54%3A00Z&sp=rl&sig=l7xZMHXKqdJMXZNn5QC6Pv4vejkRtccAnAviWp0zunM%3D"></script>
+    <script>
+function stop() {
+         let video = document.getElementById("video_frame")
+         video.contentWindow.postMessage( '{"event":"command", "func":"stopVideo", "args":""}', '*');
+      }
+      // to pause the video
+      function pause() {
+         let video = document.getElementById("video_frame")
+         video.contentWindow.postMessage( '{"event":"command", "func":"pauseVideo()", "args":""}', '*');
+      }
+    </script>
 </head>
 
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
         <div class="container"><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
-                <picture><img src="assets/img/2560px-SAS_logo_horiz_small.svg.png"></picture>
+                <picture><img src="https://mtes00tt00storage3.file.core.windows.net/mtes-tt-file-share/data/P_FORD/IndustrialApp/assets/img/2560px-SAS_logo_horiz_small.svg.png?sv=2023-01-03&ss=btqf&srt=sco&st=2024-03-29T00%3A54%3A49Z&se=2025-04-30T00%3A54%3A00Z&sp=rl&sig=l7xZMHXKqdJMXZNn5QC6Pv4vejkRtccAnAviWp0zunM%3D"></picture>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="index.html">Monitor</a></li>
                     <li class="nav-item"><a class="nav-link" href="features.html">Connected Factory</a></li>
@@ -27,11 +44,60 @@
             </div>
         </div>
     </nav>
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+        <div id="player"></div>
+
+        <script>
+          // 2. This code loads the IFrame Player API code asynchronously.
+          var tag = document.createElement('script');
+    
+          tag.src = "https://www.youtube.com/iframe_api";
+          var firstScriptTag = document.getElementsByTagName('script')[0];
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    
+          // 3. This function creates an <iframe> (and YouTube player)
+          //    after the API code downloads.
+          var player;
+          function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+              height: '390',
+              width: '640',
+              videoId: 'JT3anqMWPyc',
+              playerVars: {
+                'playsinline': 1,
+                'autoplay': 1,
+                'loop':1
+              },
+              events: {
+                'onReady': startVideo
+              }
+            });
+          }
+          
+          // 4. The API will call this function when the video player is ready.
+          function onPlayerReady(event) {
+            event.target.playVideo();
+          }
+          function startVideo() {
+            player.playVideo();
+          }
+          function pauseVideo() {
+            player.pauseVideo();
+          }
+          function stopVideo() {
+            player.stopVideo();
+          }
+        </script>
     <main class="page landing-page"><span>Controller Logged in as:&nbsp;</span><code>seford</code>
         <section class="flex-row clean-block clean-hero" style="color: rgba(9, 162, 255, 0.85);opacity: 1;filter: saturate(101%);">
             <div class="text" style="text-align: right;"></div>
             <hr>
-            <div class="text"><strong>Status...&nbsp; &nbsp; &nbsp;</strong><strong data-bss-disabled-mobile="true" class="flash animated infinite" style="color: rgb(2,139,24);">Running A46371CJ1&nbsp;<br>&nbsp;</strong><iframe allowfullscreen="" frameborder="0" src="https://www.youtube.com/embed/JT3anqMWPyc?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=JT3anqMWPyc" width="560" height="315"></iframe><button class="btn btn-outline-danger btn-lg" type="submit" style="border-radius: 31px;border-width: 6px;border-color: rgb(253,27,13);">STOP</button><button class="btn btn-outline-success btn-lg" type="submit" style="border-radius: 31px;border-width: 6px;border-color: rgb(7,200,61);">START</button>
+            <div class="text">
+                <strong>Status...&nbsp; &nbsp; &nbsp;</strong>
+                <strong data-bss-disabled-mobile="true" class="flash animated infinite" style="color: rgb(2,139,24);">Running A46371CJ1&nbsp;<br>&nbsp;</strong>
+                
+                <button class="btn btn-outline-danger btn-lg" onClick="pauseVideo()" id="stop_btn" type="submit" style="border-radius: 31px;border-width: 6px;border-color: rgb(253,27,13);">STOP</button>
+                <button class="btn btn-outline-success btn-lg" onClick="startVideo()" id="start_btn" type="submit" style="border-radius: 31px;border-width: 6px;border-color: rgb(7,200,61);">START</button>
                 <hr><strong>Enter a Controller Note:&nbsp;&nbsp;</strong><input type="text"><button class="btn btn-primary" type="button">Submit</button>
                 <div class="table-responsive">
                     <table class="table">
@@ -59,11 +125,6 @@
             </div>
         </section>
     </main>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-    <script src="assets/js/vanilla-zoom.js"></script>
-    <script src="assets/js/theme.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heatmap Example</title>
+    
+<!--load restaf, and other scripts needed for easy js manipulation -->
+    <script src="https://unpkg.com/@sassoftware/restaf@next/dist/restaf.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://unpkg.com/@sassoftware/restaflib@4.0.1/dist/restaflib.min.js"></script>
+    <script>
+        let store = restaf.initStore({casProxy: true});
+    </script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- load d3 v6 -->
+    <script
+      type="text/javascript"
+      src="https://d3js.org/d3.v6.js"
+    ></script>
+
+    <!-- load ddc utilities -->
+    <script type="text/javascript" src="../sas-visualanalytics-thirdpartyvisualizations/util/messagingUtil.js"></script>
+    <script type="text/javascript" src="../sas-visualanalytics-thirdpartyvisualizations/util/contentUtil.js"></script>
+    <script type="text/javascript" src="../sas-visualanalytics-thirdpartyvisualizations/thirdPartyHelpers/d3.js"></script>
+
+    <!-- load custom scripts -->
+    <script src="ddc_heatmap2.js"></script>
+
+    <style>
+      table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+    </style>
+
+  </head>
+
+  <body onload="init();">
+    <div class="row">
+        <div id="user_info" class="col-sm-12">
+    
+        </div>
+    </div>
+
+    <br>
+
+    <table id="selectionTable">
+       <thead>
+            <tr>
+                <th>Lot Name</th>
+                <th>Wafer Index</th>
+                <th>Selection Index</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+
+    <br>
+
+    <button onclick="displayWaferHeatmap()" id="display_wafer_heatmap" disabled>Examine Wafer(s)</button>
+    <button onclick="clearTable()" id="clearTable">Clear Table</button>
+    
+    <div id="my_dataviz1"></div>
+    <div id="my_dataviz2"></div>
+
+
+  </body>
+</html>
+
+

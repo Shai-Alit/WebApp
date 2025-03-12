@@ -32,6 +32,17 @@ const svg = d3.select(options.container)
 .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+function handleZoom(e){
+  d3.select('svg g')
+    .attr('transform',e.transform);
+}
+
+let zoom = d3.zoom()
+  .on('zoom',handleZoom);
+
+d3.select('svg') 
+  .call(zoom);
+  
 //Read the data
 d3.csv("https://shai-alit.github.io/doc_repo/wafer_single.csv").then( function(csvdata) {
 
